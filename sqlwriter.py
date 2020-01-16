@@ -4,14 +4,14 @@ import sqlite3
 
 all_topics = "JsonDataFromBatteries/#"
 dbFile = "mqttbatterydata.db"
-tableDb = "batterydataC"
+tableDb = "batterydataD"
 
 #Creating table in database
-def createTableDb():
-    print ("creating table C")
+def createTableDb(TABLE):
+    print ("creating table D")
     connection = sqlite3.connect(dbFile)
     cursor = connection.cursor()
-    sql ="CREATE TABLE IF NOT EXISTS "+tableDb+" (FIRST_NAME TEXT NOT NULL )"
+    sql ="CREATE TABLE IF NOT EXISTS "+TABLE+" (FIRST_NAME TEXT NOT NULL )"
     cursor.execute(sql)
     connection.commit()
     
@@ -19,7 +19,7 @@ def createTableDb():
 # The callback for when the client receives a CONNACK response from the server.
 def on_connect(client, userdata, flags, rc):
     print("Connected with result code "+str(rc))
-    createTableDb()
+    createTableDb(tableDb)
     # Subscribing in on_connect() means that if we lose the connection and
     # reconnect then subscriptions will be renewed.
     client.subscribe(all_topics)
