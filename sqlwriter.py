@@ -20,7 +20,7 @@ def on_message(client, userdata, msg):
  #   result = (theTime + "\t" + str(msg.payload))
  #   print(msg.topic + ":\t" + result)
     print("ping")
-    if (msg.topic == all_topics):
+    if (str(msg.topic) == all_topics):
         print("ping ping")
         print("Message received from topic: " + str(msg.topic) + " payload: " + str(msg.payload))
         createTableDb(str(msg.topic))
