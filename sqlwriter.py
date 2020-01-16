@@ -6,7 +6,7 @@ all_topics = "JsonDataFromBatteries/#"
 dbFile = "mqttbatterydata.db"
 tableDb = "batterydataA"
 
-def createTableDb()
+def createTableDb():
     print ("creating table E")
     connection = sqlite3.connect(dbFile)
     cursor = connection.cursor()
