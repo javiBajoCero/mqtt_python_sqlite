@@ -23,7 +23,8 @@ def on_message(client, userdata, msg):
    # if (str(msg.topic) == all_topics):
     print("ping ping")
     print("Message received from topic: " + str(msg.topic) + " payload: " + str(msg.payload))
-    createTableDb(str(msg.topic))
+    tablename = str(msg.topic).split(",")
+    createTableDb(tablename[1])
     writeToDb(str(msg.payload))
         #return
     return
