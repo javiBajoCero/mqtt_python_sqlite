@@ -4,14 +4,14 @@ import sqlite3
 
 all_topics = "JsonDataFromBatteries/#"
 dbFile = "mqttbatterydata.db"
-tableDb = "batterydataB"
+tableDb = "batterydataC"
 
 #Creating table in database
 def createTableDb():
-    print ("creating table E")
+    print ("creating table C")
     connection = sqlite3.connect(dbFile)
     cursor = connection.cursor()
-    sql ="CREATE TABLE IF NOT EXISTS "+tableDb+" (FIRST_NAME CHAR(20) NOT NULL )"
+    sql ="CREATE TABLE IF NOT EXISTS "+tableDb+" (FIRST_NAME TEXT NOT NULL )"
     cursor.execute(sql)
     connection.commit()
     
