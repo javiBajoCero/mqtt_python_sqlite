@@ -21,7 +21,7 @@ def on_message(client, userdata, msg):
  #   print(msg.topic + ":\t" + result)
    # if (str(msg.topic) == all_topics):
     print("Message received from topic: " + str(msg.topic) + " payload: " + str(msg.payload))
-    tablename = str(msg.topic).split(" ")
+    tablename = str(msg.topic).split("/")
     print("creating table:" +tablename[1])
     createTableDb(tablename[1])
     writeToDb(str(msg.payload))
