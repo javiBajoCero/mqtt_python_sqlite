@@ -35,7 +35,7 @@ def on_message(client, userdata, msg):
 def writeToDb(theTime, temperature, humidity):
     conn = sqlite3.connect(dbFile)
     c = conn.cursor()
-    print "Writing to db..."
+    print ("Writing to db...")
     c.execute("INSERT INTO climate VALUES (?,?,?)", (theTime, temperature, humidity))
     conn.commit()
 
