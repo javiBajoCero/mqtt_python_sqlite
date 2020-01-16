@@ -20,7 +20,7 @@ def on_message(client, userdata, msg):
  #   result = (theTime + "\t" + str(msg.payload))
  #   print(msg.topic + ":\t" + result)
     if (msg.topic == all_topics):
-        print("Message received from topic: "msg.topic + " payload: " + str(msg.payload))
+        print("Message received from topic: "str(msg.topic) + " payload: " + str(msg.payload))
         createTableDb(msg.topic)
         writeToDb(str(msg.payload))
         #return
