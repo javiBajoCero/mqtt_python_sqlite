@@ -3,8 +3,8 @@ import paho.mqtt.client as mqtt
 import sqlite3
 
 all_topics = "JsonDataFromBatteries/#"
-dbFile = "data.db"
-
+dbFile = "mqttbatterydata.db"
+tableDb = "batterydataA"
 # The callback for when the client receives a CONNACK response from the server.
 def on_connect(client, userdata, flags, rc):
     print("Connected with result code "+str(rc))
@@ -27,7 +27,7 @@ def writeToDb(datatoDb):
     conn = sqlite3.connect(dbFile)
     c = conn.cursor()
     print ("Writing to db...")
-    c.execute("INSERT INTO battery_data VALUES ("+ datatoDb+")")
+    c.execute("INSERT INTO"tableDb"VALUES ("+ datatoDb +")")
     conn.commit()
     
 client = mqtt.Client()
