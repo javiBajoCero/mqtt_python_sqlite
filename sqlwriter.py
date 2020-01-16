@@ -10,17 +10,18 @@ tableDb = "batterydataD"
 # The callback for when the client receives a CONNACK response from the server.
 def on_connect(client, userdata, flags, rc):
     print("Connected with result code "+str(rc))
-    createTableDb(tableDb)
     # Subscribing in on_connect() means that if we lose the connection and
     # reconnect then subscriptions will be renewed.
     client.subscribe(all_topics)
     
 # The callback for when a PUBLISH message is received from the server.
 def on_message(client, userdata, msg):
-    theTime = strftime("%Y-%m-%d %H:%M:%S", gmtime())
-    result = (theTime + "\t" + str(msg.payload))
-    print(msg.topic + ":\t" + result)
+ #   theTime = strftime("%Y-%m-%d %H:%M:%S", gmtime())
+ #   result = (theTime + "\t" + str(msg.payload))
+ #   print(msg.topic + ":\t" + result)
     if (msg.topic == all_topics):
+        print("Message received from topic: "msg.topic + " payload: " + str(msg.payload))
+        createTableDb(msg.topic)
         writeToDb(str(msg.payload))
         #return
     return
@@ -28,10 +29,10 @@ def on_message(client, userdata, msg):
 #######################   database   ##################################################
 #Creating table in database
 def createTableDb(TABLE):
-    print ("creating table D")
+    print ("creating table: "+TABLE)
     connection = sqlite3.connect(dbFile)
     cursor = connection.cursor()
-    sql ="CREATE TABLE IF NOT EXISTS "+TABLE+" (FIRST_NAME TEXT NOT NULL )"
+    sql ="CREATE TABLE IF NOT EXISTS "+TABLE+" (DATA TEXT NOT NULL )"
     cursor.execute(sql)
     connection.commit()
     
