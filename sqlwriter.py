@@ -27,7 +27,7 @@ def writeToDb(datatoDb):
     conn = sqlite3.connect(dbFile)
     c = conn.cursor()
     print ("Writing to db...")
-    c.execute("INSERT INTO"tableDb"VALUES ("+ datatoDb +")")
+    c.execute("INSERT INTO"+tableDb+"VALUES ("+ datatoDb +")")
     conn.commit()
     
 client = mqtt.Client()
