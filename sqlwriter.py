@@ -19,11 +19,10 @@ def on_message(client, userdata, msg):
  #   theTime = strftime("%Y-%m-%d %H:%M:%S", gmtime())
  #   result = (theTime + "\t" + str(msg.payload))
  #   print(msg.topic + ":\t" + result)
-    print("ping")
    # if (str(msg.topic) == all_topics):
-    print("ping ping")
     print("Message received from topic: " + str(msg.topic) + " payload: " + str(msg.payload))
     tablename = str(msg.topic).split(",")
+    print("creating table:" +tablename[1])
     createTableDb(tablename[1])
     writeToDb(str(msg.payload))
         #return
