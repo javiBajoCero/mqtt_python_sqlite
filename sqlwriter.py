@@ -6,16 +6,7 @@ all_topics = "JsonDataFromBatteries/#"
 dbFile = "mqttbatterydata.db"
 tableDb = "batterydataD"
 
-#Creating table in database
-def createTableDb(TABLE):
-    print ("creating table D")
-    connection = sqlite3.connect(dbFile)
-    cursor = connection.cursor()
-    sql ="CREATE TABLE IF NOT EXISTS "+TABLE+" (FIRST_NAME TEXT NOT NULL )"
-    cursor.execute(sql)
-    connection.commit()
-    
-    
+##############################   mqtt  ################################################   
 # The callback for when the client receives a CONNACK response from the server.
 def on_connect(client, userdata, flags, rc):
     print("Connected with result code "+str(rc))
@@ -34,6 +25,16 @@ def on_message(client, userdata, msg):
         #return
     return
 
+#######################   database   ##################################################
+#Creating table in database
+def createTableDb(TABLE):
+    print ("creating table D")
+    connection = sqlite3.connect(dbFile)
+    cursor = connection.cursor()
+    sql ="CREATE TABLE IF NOT EXISTS "+TABLE+" (FIRST_NAME TEXT NOT NULL )"
+    cursor.execute(sql)
+    connection.commit()
+    
 def writeToDb(datatoDb):
     conn = sqlite3.connect(dbFile)
     c = conn.cursor()
