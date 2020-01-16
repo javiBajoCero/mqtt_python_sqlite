@@ -4,7 +4,6 @@ import sqlite3
 
 all_topics = "JsonDataFromBatteries/#"
 dbFile = "mqttbatterydata.db"
-tableDb = "batterydataD"
 
 ##############################   mqtt  ################################################   
 # The callback for when the client receives a CONNACK response from the server.
@@ -39,11 +38,11 @@ def createTableDb(TABLE):
     connection.commit()
     
 def writeToDb(datatoDb):
-    conn = sqlite3.connect(dbFile)
-    c = conn.cursor()
+    connection = sqlite3.connect(dbFile)
+    cursor = connection.cursor()
     print ("Writing to db...")
-    c.execute("INSERT INTO"+tableDb+"VALUES ("+ datatoDb +")")
-    conn.commit()
+    cursor.execute("INSERT INTO"+tableDb+"VALUES ("+ datatoDb +")")
+    connection.commit()
 
     
 client = mqtt.Client()
