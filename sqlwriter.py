@@ -2,11 +2,8 @@ from time import gmtime, strftime
 import paho.mqtt.client as mqtt
 import sqlite3
 
-temperature_topic = "temperature"
-humidity_topic = "humidity"
+all_topics = "JsonDataFromBatteries/#"
 dbFile = "data.db"
-
-dataTuple = [-1,-1]
 
 # The callback for when the client receives a CONNACK response from the server.
 def on_connect(client, userdata, flags, rc):
@@ -14,34 +11,25 @@ def on_connect(client, userdata, flags, rc):
 
     # Subscribing in on_connect() means that if we lose the connection and
     # reconnect then subscriptions will be renewed.
-    client.subscribe(temperature_topic)
-    client.subscribe(humidity_topic)
+    client.subscribe(all_topics)
     
 # The callback for when a PUBLISH message is received from the server.
 def on_message(client, userdata, msg):
     theTime = strftime("%Y-%m-%d %H:%M:%S", gmtime())
-
     result = (theTime + "\t" + str(msg.payload))
     print(msg.topic + ":\t" + result)
-    if (msg.topic == temperature_topic):
-        dataTuple[0] = str(msg.payload)
-    if (msg.topic == humidity_topic):
-        dataTuple[1] = str(msg.payload)
+    if (msg.topic == all_topics):
+        writeToDb(str(msg.payload))
         #return
-    if (dataTuple[0] != -1 and dataTuple[1] != -1):
-        writeToDb(theTime, dataTuple[0], dataTuple[1])
     return
 
-def writeToDb(theTime, temperature, humidity):
+def writeToDb(datatoDb):
     conn = sqlite3.connect(dbFile)
     c = conn.cursor()
     print ("Writing to db...")
-    c.execute("INSERT INTO climate VALUES (?,?,?)", (theTime, temperature, humidity))
+    c.execute("INSERT INTO battery_data VALUES ("+ datatoDb+")")
     conn.commit()
-
-    global dataTuple
-    dataTuple = [-1, -1]
-
+    
 client = mqtt.Client()
 client.on_connect = on_connect
 client.on_message = on_message
