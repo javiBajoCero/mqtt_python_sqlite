@@ -3,6 +3,7 @@ from time import gmtime, strftime
 import paho.mqtt.client as mqtt
 import sqlite3
 
+
 all_topics = "JsonDataFromBatteries/#"
 dbFile = "mqttbatterydata.db"
 
