@@ -24,26 +24,38 @@ def on_message(client, userdata, msg):
     tablename = str(msg.topic).split("/")
     print("creating table:" +tablename[1])
     createTableDb(tablename[1])
-    writeToDb(str(msg.payload))
+    writeToDb(tablename[1],str(msg.payload))
         #return
     return
 
 #######################   database   ##################################################
 #Creating table in database
 def createTableDb(TABLE):
+ 
     print ("creating table: "+TABLE)
     connection = sqlite3.connect(dbFile)
     cursor = connection.cursor()
-    sql ="CREATE TABLE IF NOT EXISTS "+TABLE+" (DATA TEXT NOT NULL )"
-    cursor.execute(sql)
+    sql_create ="CREATE TABLE IF NOT EXISTS "+TABLE+" ( timestamp TEXT, DATA TEXT )"
+    print (sql_create)
+    cursor.execute(sql_create)
     connection.commit()
+    cursor.close()
+    connection.close()
+
     
-def writeToDb(datatoDb):
+def writeToDb(TABLE,datatoDb):
+    print ("writting table: "+TABLE)
+    datatoDb=datatoDb[1:len(datatoDb)]#eliminate that molest b at the begining
+    timestamptoDb = strftime("%Y-%m-%d %H:%M:%S", gmtime())
     connection = sqlite3.connect(dbFile)
     cursor = connection.cursor()
-    print ("Writing to db...")
-    cursor.execute("INSERT INTO"+tableDb+"VALUES ("+ datatoDb +")")
+    sql_insert ="INSERT INTO "+TABLE+"(timestamp,DATA) VALUES ('"+timestamptoDb+"',"+ datatoDb +")"
+    print (sql_insert)
+    cursor.execute(sql_insert)
     connection.commit()
+    cursor.close()
+    print("Success Writting table");
+    connection.close()
 
     
 client = mqtt.Client()
